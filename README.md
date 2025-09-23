@@ -1,2 +1,2 @@
 # Forumatrix
-A full-stack forum and chat platform with a real-time collaborative spreadsheet grid.
+Forumatrix is an experimental full-stack web application that merges the social dynamics of a forum and live chat with the structured productivity of an Excel-like shared grid. Users can create posts, comment, and discuss topics while simultaneously collaborating on cell-based data in real time. The project demonstrates integration of community-driven discourse with synchronous co-editing tools, exploring the boundary between knowledge sharing and collective problem-solving.
