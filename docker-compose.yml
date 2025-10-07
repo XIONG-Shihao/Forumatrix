@@ -1,0 +1,38 @@
+name: arena-ai
+
+services:
+  api:
+    build: ./backend
+    environment:
+      - PORT=8080
+      - DATABASE_URL=sqlite:///app/data/app.db   # absolute path inside container
+      - DEV_SEED_ADMIN=1
+      - ADMIN_EMAIL=admin@example.com
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=AdminPass123!
+      - RUST_LOG=info,arena_ai_backend=debug,tower_http=info,sqlx=warn
+      - "CHAT_MASTER_KEY=base64:YWd1JOR24bGVaRAazy25x42a9iRN0URSEJH0SgJabBs="
+    ports:
+      - "8080:8080"
+    volumes:
+      - db_data:/app/data                         # persist the SQLite file
+      - avatars_data:/app/uploads                 # 👈 persist avatars
+      - ./backend/migrations:/app/migrations:ro
+    restart: unless-stopped
+
+  web:
+    build: ./frontend
+    command: ["npm","run","dev","--","--host","0.0.0.0"]
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8080       # Adjust if needed
+
+volumes:
+  db_data:
+  avatars_data:
