@@ -1,0 +1,297 @@
+/* -------- Page & card -------- */
+:root {
+  /* Tweak this to change how wide the form area feels */
+  --profile-nav-width: 380px;   /* ← wider sidebar buttons */
+  --profile-nav-font: 18px;     /* ← bigger label text */
+  --profile-nav-minh: 66px;     /* ← taller buttons */
+  --profile-nav-radius: 14px;   /* ← corner radius */
+  --profile-form-max: 360px;
+
+  /* 🔧 Profile panel font sizes */
+  --profile-label-font: 14px;     /* labels like “Username”, “Bio” */
+  --profile-field-font: 17px;     /* input/textarea text */
+  --profile-button-font: 16px;    /* Edit / Upload buttons */
+
+  /* tweak these two numbers anytime */
+  --profile-name-size: 24px;
+  --profile-email-size: 16px;
+
+  /* Site title (top-left) */
+  --site-title-size: 25px;
+
+  /* Tabs: Latest | Popular | Controversial */
+  --feed-tab-size: 18px;
+
+  /* Post card (Home list) */
+  --feed-title-size:22px;
+  --feed-username-size: 20px;
+  --feed-body-size: 16px;
+  --feed-time-size: 16px;
+  --feed-icon-size: 18px; /* ❤️ and 💬 */
+}
+
+/* Only the Profile screen: anchor from the TOP (not centered) */
+.profile-page {
+  --profile-top-gap: clamp(56px, 25vh, 240px); /* min 56px, target 25% vh, cap 240px */
+  min-height: 100dvh;
+  display: block;                 /* override .page’s grid centering */
+  padding: var(--profile-top-gap) 24px 40px; /* ⬅ top gap applied here */
+  color: #e8ecff;
+}
+
+/* Two-column layout: left nav + right panel */
+.profile-layout {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 28px;
+  align-items: start;        /* keep both columns top-aligned */
+}
+
+/* Left sidebar (sticky) */
+.profile-sidebar {
+  display: grid;
+  gap: 16px;
+  position: sticky;
+  top: 16px;
+}
+
+/* Side buttons (nav + logout) */
+.side-btn {
+  width: 100%;
+  text-align: center;
+  padding: 34px 25px;
+  border-radius: 14px;
+  background: #121831;
+  border: 1px solid #2a3663;
+  color: #e6eaff;
+  font-weight: 1500;
+  letter-spacing: .2px;
+  cursor: pointer;
+  transition: box-shadow .15s ease, border-color .15s ease;
+  font-size: var(--profile-nav-font);
+}
+.side-btn:hover {
+  border-color: #5163ff;
+  box-shadow: 0 10px 24px rgba(0,0,0,.35);
+}
+.side-btn[aria-pressed="true"] {
+  outline: 0;
+  border-color: #6e7bff;
+  box-shadow: 0 0 0 2px rgba(81,99,255,.35) inset;
+}
+.side-btn.danger {
+  background: #b91c1c;
+  border-color: #b91c1c;
+  color: #fff;
+}
+
+/* Give the right panel a steady minimum height so tab switches don't jump */
+.profile-panel-card { min-height: 520px; }
+
+/* -------- Card look on the profile page -------- */
+.card {
+  width: min(512px, 100%);
+  background: #121831;
+  border: 1px solid #1f2a4d;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.35);
+}
+
+/* -------- Header -------- */
+.header-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 18px;
+
+  /* keep header text aligned with the form width */
+  max-width: var(--profile-form-max);
+  margin-inline: auto;
+}
+
+.title { font-size: 22px; font-weight: 800; letter-spacing: .2px; }
+.subtle { color: #99a3c7; font-size: 13px; }
+
+/* -------- Avatar (click to enlarge) -------- */
+.avatar-btn {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  border: 1px solid #273059;
+  background: transparent;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.avatar-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.avatar-fallback {
+  width: 100%; height: 100%;
+  display: grid; place-items: center;
+  background: #4f46e5; color: white;
+  font-weight: 800; font-size: 18px;
+  border-radius: 50%;
+}
+
+/* -------- Fields (single column, capped width) -------- */
+.profile-card .fields {
+  display: grid;
+  grid-template-columns: 1fr;  /* single column */
+  gap: 14px;
+
+  max-width: var(--profile-form-max);
+  margin-inline: auto;
+}
+
+.field { display: grid; gap: 6px; }
+.field-full { grid-column: 1 / -1; }
+.label { font-size: 12px; color: #9aa3c6; }
+.input {
+  background: #0f1530;
+  border: 1px solid #273057;
+  color: #e6eaff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+/* -------- Uploader -------- */
+.uploader-section {
+  margin-top: 18px;
+  max-width: var(--profile-form-max);
+  margin-inline: auto;
+}
+
+.uploader {}
+.uploader-row {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+
+/* Your global .btn is width:100%; override just here */
+.profile-card .uploader-section .btn {
+  width: auto;
+  min-width: 120px;
+}
+
+.btn {
+  background: #5163ff; border: 1px solid #5163ff; color: #fff;
+  padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 600;
+}
+
+.hint { color: #9aa3c6; font-size: 12px; }
+.uploader-preview { margin-top: 12px; }
+.uploader-preview-img {
+  width: 96px; height: 96px; border-radius: 50%;
+  object-fit: cover; border: 1px solid #243156;
+}
+
+/* -------- Errors -------- */
+.error {
+  background: #3a0d0d; color: #ffb4b4; border: 1px solid #5b1919;
+  border-radius: 8px; padding: 8px; text-align: center;
+}
+
+/* -------- Lightbox -------- */
+.lb-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  display: grid; place-items: center; z-index: 50;
+}
+.lb-card {
+  background: #121831; border: 1px solid #243156; border-radius: 16px;
+  padding: 18px; text-align: center; box-shadow: 0 12px 30px rgba(0,0,0,.45);
+}
+.lb-img { border-radius: 50%; object-fit: cover; border: 1px solid #2a355e; }
+
+/* -------- Header actions (edit button) -------- */
+.profile-card { position: relative; }
+
+.header-actions {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.edit-btn {
+  background: transparent;
+  border: 1px solid #2a355e;
+  color: #c9d1ff;
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.edit-btn[disabled] { opacity: .6; cursor: default; }
+
+/* -------- Disabled inputs look like text -------- */
+.input:disabled {
+  color: #e6eaff;
+  -webkit-text-fill-color: #e6eaff;
+  opacity: 1;
+  background: #0f1530;
+  border-color: #273057;
+  cursor: default;
+}
+
+/* date input pieces (WebKit) */
+input.input[type="date"]:disabled::-webkit-datetime-edit,
+input.input[type="date"]:disabled::-webkit-datetime-edit-text,
+input.input[type="date"]:disabled::-webkit-datetime-edit-year-field,
+input.input[type="date"]:disabled::-webkit-datetime-edit-month-field,
+input.input[type="date"]:disabled::-webkit-datetime-edit-day-field {
+  color: #e6eaff;
+}
+input.input[type="date"]:disabled::-webkit-calendar-picker-indicator {
+  filter: invert(1) opacity(.6);
+}
+
+/* ---- Profile panel typography ---- */
+.profile-card .label {
+  font-size: var(--profile-label-font);
+}
+
+.profile-card .input,
+.profile-card .textarea {
+  font-size: var(--profile-field-font);
+}
+
+/* Buttons inside the profile card (Edit / Upload) */
+.profile-card .btn {
+  font-size: var(--profile-button-font);
+}
+
+/* Header “Edit” button – remove the global top margin and make it tidy */
+.profile-card .header-row .btn {
+  margin-top: 0;
+  padding: 6px 12px;
+}
+
+/* Upload button already scoped but we keep it consistent */
+.profile-card .uploader-section .btn {
+  width: auto;
+  min-width: 120px;
+  font-size: var(--profile-button-font);
+}
+
+
+.profile-header-name{
+  font-size: var(--profile-name-size);
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+.profile-header-email{
+  font-size: var(--profile-email-size);
+  color: #99a3c7;
+  line-height: 1.25;
+}
+
+/* Site title class used in Header.tsx */
+.site-title{
+  font-weight: 800;
+  letter-spacing: .2px;
+  font-size: var(--site-title-size);
+}

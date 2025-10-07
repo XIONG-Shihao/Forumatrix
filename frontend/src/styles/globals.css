@@ -1,0 +1,95 @@
+/* --- Reset / base --- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body { margin: 0; }
+
+/* Color tokens (tweak freely) */
+:root{
+  --bg-1:#0b1220;        /* page background */
+  --bg-2:#0e172a;        /* panel background */
+  --border:#1f2937;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --brand:#4f46e5;
+  --brand-2:#3b82f6;
+}
+
+/* Full-bleed page background */
+body{
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(79,70,229,0.2), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(56,189,248,0.14), transparent 50%),
+    linear-gradient(0deg, var(--bg-1), var(--bg-1));
+}
+
+/* A simple full-viewport centering helper */
+.page{
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+/* Card + small UI primitives (lightweight, no lib) */
+.card{
+  width: min(420px, 100%);
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.h1{
+  margin: 0 0 6px 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+.subtle{ color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+
+.tabs{ display:flex; gap:12px; margin: 6px 0 14px; }
+.tabs button{
+  flex:0 0 auto;
+  padding: 8px 14px;
+  background: transparent;
+  border:1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  cursor: pointer;
+}
+.tabs button[aria-pressed="true"]{
+  background: rgba(79,70,229,.15);
+  border-color: rgba(79,70,229,.45);
+}
+
+.field{ display:flex; flex-direction:column; gap:6px; margin: 10px 0; }
+.label{ font-size: 12px; color: var(--muted); }
+.input, .textarea{
+  width: 100%;
+  border:1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #0b1020;
+  color: var(--text);
+  outline: none;
+}
+.textarea{ min-height: 90px; resize: vertical; }
+
+.row{ display:flex; gap: 10px; }
+.grow{ flex:1 1 auto; }
+
+.btn{
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--brand-2);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.btn:disabled{ opacity:.6; cursor: default; }
+
+.error{ color: #ef4444; font-size: 13px; margin-top: 6px; }
