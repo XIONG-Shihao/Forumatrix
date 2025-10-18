@@ -5,7 +5,7 @@ use sqlx::Row;
 use crate::infra::db::Db;
 
 // Hashing via your existing helper
-use crate::api::auth::password::hash_password;
+use crate::api::auth::auth_handler::password::hash_password;
 
 /// If DEV_SEED_ADMIN is set (1/true), ensure there is at least one admin user.
 /// - If ADMIN_EMAIL exists, promote it to admin.
