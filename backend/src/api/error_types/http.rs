@@ -210,6 +210,49 @@ impl IntoResponse for ApiError {
                     ValidationError::SnapshotEmpty => {
                         (VALIDATION_SNAPSHOT_EMPTY, "snapshot cannot be empty")
                     }
+                    // NEW: docs/pages limits & validation
+                    ValidationError::DocPagesLimitReached => (
+                        VALIDATION_DOC_PAGES_LIMIT_REACHED,
+                        "document cannot have more than 10 pages",
+                    ),
+                    ValidationError::DocPageIndexOutOfRange => (
+                        VALIDATION_DOC_PAGE_INDEX_OUT_OF_RANGE,
+                        "page index is out of range",
+                    ),
+                    ValidationError::DocPageNotFound => {
+                        (VALIDATION_DOC_PAGE_NOT_FOUND, "document page not found")
+                    }
+                    ValidationError::PageStyleInvalid => {
+                        (VALIDATION_PAGE_STYLE_INVALID, "invalid page style")
+                    } // not in {1,2,3} (Title, Heading, Body)
+                    // NEW: collaboration / join requests
+                    ValidationError::JoinAlreadyMember => (
+                        VALIDATION_JOIN_ALREADY_MEMBER,
+                        "user is already a collaborator",
+                    ),
+                    ValidationError::JoinAlreadyPending => (
+                        VALIDATION_JOIN_ALREADY_PENDING,
+                        "a pending join request already exists",
+                    ),
+                    ValidationError::JoinRequestNotFound => {
+                        (VALIDATION_JOIN_REQUEST_NOT_FOUND, "join request not found")
+                    }
+                    ValidationError::JoinRequestNotPending => (
+                        VALIDATION_JOIN_REQUEST_NOT_PENDING,
+                        "join request is not pending",
+                    ),
+                    ValidationError::CannotRequestOwnDoc => (
+                        VALIDATION_CANNOT_REQUEST_OWN_DOC,
+                        "cannot request to join your own document",
+                    ),
+                    ValidationError::DocMembersLimitReached => (
+                        VALIDATION_DOC_MEMBERS_LIMIT_REACHED,
+                        "document page cannot have more than 10 members",
+                    ),
+                    ValidationError::CannotRemoveOwner => (
+                        VALIDATION_CANNOT_REMOVE_OWNER,
+                        "cannot remove the document owner",
+                    ),
                 };
 
                 (StatusCode::BAD_REQUEST, code, msg.to_string())
