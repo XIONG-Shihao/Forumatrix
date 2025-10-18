@@ -89,4 +89,21 @@ pub enum ValidationError {
     UpdateTooLarge,
     SnapshotEmpty,
     SnapshotTooLarge,
+
+    // NEW: docs/pages
+    DocPagesLimitReached,   // > 10 requested or would exceed 10
+    DocPageIndexOutOfRange, // index not within 0..page_count-1
+    DocPageNotFound,        // row missing
+    PageStyleInvalid,       // not 1/2/3
+
+    // NEW: collaboration / join requests
+    JoinAlreadyMember,     // already in collaborators
+    JoinAlreadyPending,    // a pending request already exists
+    JoinRequestNotFound,   // request id/doc mismatch or missing
+    JoinRequestNotPending, // request exists but not in pending state
+    CannotRequestOwnDoc,   // owner trying to request join
+    CannotRemoveOwner,     // trying to remove document owner
+
+    // NEW: realtime / concurrency
+    DocMembersLimitReached, // > 10 concurrent editors on page
 }
