@@ -53,3 +53,13 @@ pub async fn user_id_from_sid_if_valid(
         .await?;
     Ok(row.map(|r| r.get::<i64, _>("user_id")))
 }
+
+// DELETE all sessions for a given user_id.
+// Returns the number of rows deleted.
+pub async fn delete_all_sessions_for_user(db: &Db, user_id: i64) -> Result<u64, sqlx::Error> {
+    let res = sqlx::query(r#"DELETE FROM sessions WHERE user_id = ?"#)
+        .bind(user_id)
+        .execute(db)
+        .await?;
+    Ok(res.rows_affected())
+}

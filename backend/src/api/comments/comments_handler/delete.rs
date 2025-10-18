@@ -17,7 +17,7 @@ use crate::api::comments::comments_validate::delete::{
 };
 
 use crate::api::error_types::{ApiError, ValidationError};
-use crate::api::notifications::notifications_query::create::add_notification_comment_deleted;
+use crate::api::notifications::notifications_query::create::notify_comment_deleted;
 use crate::infra::db::AppState;
 
 #[derive(Debug, Deserialize)]
@@ -68,13 +68,10 @@ pub async fn delete_comment_handler(
             // (Only on admin-on-user path, not on self-delete)
             let post_id = fetch_comment_post_id(&state.db, comment_id).await?;
             // Best-effort: don’t fail the whole request if notification insert fails
-            let _ = add_notification_comment_deleted(
-                &state.db,
-                author_id,
-                post_id,
-                comment_id,
-                Some(&reason),
-                when,
+            let _ = notify_comment_deleted(
+                &state.db, author_id, // recipient
+                caller_id, // actor (admin)
+                post_id, comment_id, when,
             )
             .await;
 
